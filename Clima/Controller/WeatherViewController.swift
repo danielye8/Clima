@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
+class WeatherViewController: UIViewController {
     
     var weatherManager = WeatherManager()
 
@@ -24,7 +24,14 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         searchTextField.clearButtonMode = UITextField.ViewMode.whileEditing
         weatherManager.delegate = self
     }
+    
+   
+}
 
+//MARK: - UITextFieldDelegate
+
+extension WeatherViewController : UITextFieldDelegate {
+    
     @IBAction func searchPressed(_ sender: UIButton) {
         let weatherLocation = searchTextField.text!
         searchTextField.endEditing(true)
@@ -41,7 +48,10 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         }
         searchTextField.text = "" // Reset text field
     }
-    
+} 
+
+//MARK: - WeatherManagerDelegate
+extension WeatherViewController : WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.temperatureString
